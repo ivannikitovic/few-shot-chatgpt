@@ -34,6 +34,54 @@ def make_embeddings(embedding_engine, embeddings_location):
     with open(embeddings_location, 'w') as f:
         f.write(json.dumps(embeddings))
 
+def add_similar_sorted(embeddings):
+    """
+    Takes a list of embeddings and appends the most similar questions
+        using cosine similarity to the Question json files.
+    """
+
+    for num in range(1, num_questions + 1):
+        json_location = 'data/Question_' + str(num) + '.json'
+
+        sorted_similar_questions = get_most_similar(embeddings, num-1)
+
+        with open(json_location, 'r') as f:
+            data = json.load(f)
+            data['Similar_Questions'] = sorted_similar_questions
+
+        os.remove(json_location)
+        with open(json_location, 'w') as f:
+            json.dump(data, f, indent=4)
+
+def get_most_similar(embeddings, i):
+    """
+    Returns most similar questions, while they are in their embedded form, 
+        to the target, index i, via cosine similarity.
+    """
+    cos_sims = []
+    cos_to_num = {}
+    for j in range(len(embeddings)):
+        cos_sim = util.cos_sim(embeddings[i], embeddings[j]).item()
+        cos_to_num[cos_sim] = j
+        cos_sims.append(cos_sim)
+    ordered = sorted(cos_sims, reverse=True)
+    closest_qs = []
+    for val in ordered:
+        closest_qs.append(cos_to_num[val]+1)
+    return closest_qs[1:]
+
+def get_embeddings(embeddings_location):
+    """
+    Retrieves embeddings from embeddings_file. 
+        Embeddings are assumed to be (n x d).
+    """
+    with open(embeddings_location, 'r') as f:
+        points = json.load(f)['list_of_embeddings']
+    return np.array(points)
+
 if __name__ == "__main__":
     if not os.path.exists(embeddings_location):
         make_embeddings(embedding_engine, embeddings_location)
+
+    embeddings = get_embeddings(embeddings_location)
+    add_similar_sorted(embeddings)
