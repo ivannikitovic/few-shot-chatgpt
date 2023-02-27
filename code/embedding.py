@@ -44,10 +44,18 @@ def add_similar_sorted(embeddings):
         json_location = 'data/Question_' + str(num) + '.json'
 
         sorted_similar_questions = get_most_similar(embeddings, num-1)
+        correct_similar_questions = []
+        for question in sorted_similar_questions:
+            json_location_2 = 'data/Question_' + str(question) + '.json'
+            with open(json_location_2, 'r') as f:
+                data = json.load(f)
+            grade = data['Grade']
+            if grade == "1":
+                correct_similar_questions.append(question)
 
         with open(json_location, 'r') as f:
             data = json.load(f)
-            data['Similar_Questions'] = sorted_similar_questions
+            data['Similar_Questions'] = correct_similar_questions
 
         os.remove(json_location)
         with open(json_location, 'w') as f:

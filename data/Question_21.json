@@ -5,12 +5,9 @@
     "ChatGPT_Answer": "Use cases and best type of model:\n\nTumor segmentation analysis or recognizing tumor patches in medical \"slides\": CNN\nSentiment analysis on a large text corpus: Fully connected neural network\nTime series forecasting to predict price of automobile in the next month: RNN\nPredict the price of a house based on square feet, ratio of bedrooms/bathrooms: Fully connected neural network",
     "Grade": "0",
     "Similar_Questions": [
-        2,
         11,
         10,
         13,
-        16,
-        4,
         14,
         22,
         3,
@@ -20,12 +17,7 @@
         8,
         15,
         1,
-        18,
-        19,
-        5,
-        7,
-        6,
-        12
+        19
     ],
     "Few-Shot_Answer": "",
     "Few-Shot_Evaluation": ""

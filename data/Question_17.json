@@ -6,26 +6,17 @@
     "Grade": "1",
     "Similar_Questions": [
         9,
-        16,
         14,
         15,
         19,
         22,
         11,
-        18,
         10,
-        21,
-        2,
-        6,
         3,
         20,
-        4,
-        12,
         8,
-        5,
         13,
-        1,
-        7
+        1
     ],
     "Few-Shot_Answer": "",
     "Few-Shot_Evaluation": ""
